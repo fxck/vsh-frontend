@@ -1,0 +1,9 @@
+app1:
+  build:
+    base: [ nodejs@16 ]
+    build:
+      - npm i
+      - npm run build api
+    deploy: [ dist, package.json, package-lock.json, node_modules ]
+  run:
+    start: node dist/apps/api/main.js
