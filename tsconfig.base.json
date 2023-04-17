@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@vsh/app/*": ["./apps/app/src/modules/*"],
+      "@vsh/app/env": ["./apps/app/src/environments"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

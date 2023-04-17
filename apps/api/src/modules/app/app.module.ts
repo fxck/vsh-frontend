@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TodosModule } from './todos/todos.module';
-
-console.log(process.env.DB_CONNECTION_STRING);
+import { TodosModule } from '../todos/todos.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.DB_CONNECTION_STRING,
+      url: process.env.DB_URL,
       ssl: false,
       autoLoadEntities: true,
       synchronize: true

@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+  <input
+    type="text"
+    [formControlName]="'text'"
+  />
+  <input
+    type="checkbox"
+    [formControlName]="'completed'"
+  />
+</form>
+
+<button (click)="add.emit({ data: form.getRawValue() })">add</button>

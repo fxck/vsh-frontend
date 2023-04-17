@@ -1,0 +1,22 @@
+<p>{{ data.completed ? '[x]' : '[ ]' }} {{ data.text }}</p>
+
+<form [formGroup]="form">
+  <input
+    type="text"
+    [formControlName]="'text'"
+    (change)="update.emit({
+      id: data.id,
+      data: form.getRawValue()
+    })"
+  />
+  <input
+    type="checkbox"
+    [formControlName]="'completed'"
+    (change)="update.emit({
+      id: data.id,
+      data: form.getRawValue()
+    })"
+  />
+</form>
+
+<button (click)="delete.emit(data.id)">delete</button>

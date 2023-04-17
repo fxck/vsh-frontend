@@ -1,0 +1,12 @@
+<vsh-todo-add-form (add)="onAdd$.next($event)"></vsh-todo-add-form>
+
+<div *ngrxLet="{ todos: todos$ } as state">
+
+  <vsh-todo-item
+    *ngFor="let todo of state.todos"
+    (delete)="onDelete$.next($event)"
+    (update)="onUpdate$.next($event)"
+    [data]="todo">
+  </vsh-todo-item>
+
+</div>

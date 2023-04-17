@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "vshFrontend",
+            "prefix": "vsh",
             "style": "camelCase"
           }
         ],
@@ -17,10 +17,17 @@
           "error",
           {
             "type": "element",
-            "prefix": "vsh-frontend",
+            "prefix": "vsh",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Component", "Feature"]
+          }
+        ],
+        "@typescript-eslint/no-empty-interface": "off"
       },
       "extends": [
         "plugin:@nrwl/nx/angular",

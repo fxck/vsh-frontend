@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  Put,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dtos/create.todo.dto';
 import { UpdateTodoDto } from './dtos/update.todo.dto';
@@ -32,7 +33,7 @@ export class TodosController {
     return this.todosService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateTodoDto) {
     return this.todosService.update(id, data);
   }
