@@ -18,10 +18,7 @@ export class TodosApi {
   add$(clientId: string, data: TodoAddPayload) {
     return this.#httpClient.post<TodoAddResponse>(
       this.#apiUrl,
-      {
-        ...data,
-        clientId
-      }
+      { ...data, clientId }
     );
   }
 
@@ -41,6 +38,13 @@ export class TodosApi {
   search$(clientId: string) {
     return this.#httpClient.get<TodoEntity[]>(
       `${this.#apiUrl}?clientId=${clientId}`
+    );
+  }
+
+  markAllComplete$(clientId: string) {
+    return this.#httpClient.patch<TodoUpdateResponse>(
+      `${this.#apiUrl}/mark-all-as-completed?clientId=${clientId}`,
+      {}
     );
   }
 

@@ -1,0 +1,9 @@
+$_maxWidth: 460px;
+$_padding: 48px 24px;
+
+.__wrap {
+  display: block;
+  width: $_maxWidth;
+  padding: $_padding;
+  margin: 0 auto;
+}

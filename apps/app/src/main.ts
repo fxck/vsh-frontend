@@ -1,24 +1,25 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from '@vsh/app/app';
+import { provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
-import { provideState, provideStore } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideEffects } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@vsh/app/env';
-import { TodosEffects } from '@vsh/app/features/todos';
-import { provideHttpClient } from '@angular/common/http';
-import { todosState } from './modules/features/todos/todos.state';
+import { AppComponent } from '@vsh/app/app';
+import { TodosBaseModule } from '@vsh/app/core/todos-base';
 
 bootstrapApplication(
   AppComponent,
   {
     providers: [
-      importProvidersFrom(BrowserAnimationsModule),
+      importProvidersFrom(
+        BrowserAnimationsModule,
+        TodosBaseModule,
+        EffectsModule.forRoot(),
+        StoreModule.forRoot()
+      ),
       provideHttpClient(),
-      provideStore(),
-      provideState(todosState),
-      provideEffects(TodosEffects),
       provideStoreDevtools({
         maxAge: 25,
         logOnly: !environment.production

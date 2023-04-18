@@ -39,7 +39,11 @@ export const todosActions = createActionGroup({
 
     'search': props<{ clientId: string; }>(),
     'search success': props<{ data: TodoEntity[]; }>(),
-    'search fail': emptyProps()
+    'search fail': emptyProps(),
+
+    'mark all complete': props<{ clientId: string; }>(),
+    'mark all complete success': emptyProps(),
+    'mark all complete fail': emptyProps(),
   }
 })
 
@@ -65,6 +69,10 @@ export const todosState = createFeature({
     on(todosActions.deleteSuccess, (state, { id }) => ({
       ...state,
       data: state.data.filter((todo) => todo.id !== id)
+    })),
+    on(todosActions.markAllCompleteSuccess, (state) => ({
+      ...state,
+      data: state.data.map((todo) => ({ ...todo, completed: true }))
     }))
   )
 });

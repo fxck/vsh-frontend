@@ -1,12 +1,32 @@
-<form [formGroup]="form">
-  <input
-    type="text"
-    [formControlName]="'text'"
-  />
-  <input
-    type="checkbox"
-    [formControlName]="'completed'"
-  />
+<form
+  class="__form"
+  (submit)="add.emit({ data: form.getRawValue() })"
+  [formGroup]="form">
+
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        [placeholder]="'Napište popis úkolu..'"
+        type="text"
+        [formControlName]="'text'"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="__checkbox-wrap">
+    <mat-checkbox [formControlName]="'completed'">
+      Přidat jako vyřešené
+    </mat-checkbox>
+  </div>
+
+  <button
+    color="primary"
+    mat-raised-button
+    class="__button"
+    type="submit">
+    Přidat úkol
+  </button>
+
 </form>
 
-<button (click)="add.emit({ data: form.getRawValue() })">add</button>

@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   orderBy: {
-    id: 'ASC',
+    id: 'DESC'
   }
 })
 export class Todo {

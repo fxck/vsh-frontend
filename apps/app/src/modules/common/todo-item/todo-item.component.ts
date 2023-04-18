@@ -1,6 +1,23 @@
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { TodoEntity, TodoUpdatePayload } from '@vsh/app/features/todos/todos.model';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TodoEntity, TodoUpdatePayload } from '@vsh/app/core/todos-base';
 
 @Component({
   selector: 'vsh-todo-item',
@@ -9,7 +26,13 @@ import { TodoEntity, TodoUpdatePayload } from '@vsh/app/features/todos/todos.mod
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class TodoItemComponent {
@@ -50,6 +73,5 @@ export class TodoItemComponent {
 
   @Output()
   update = new EventEmitter<{ id: number; data: TodoUpdatePayload; }>();
-
 
 }

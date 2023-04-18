@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.__add-form-card {
+  padding: 48px;
+}
+
+.__title {
+  font-size: 30px;
+  text-align: center;
+  padding-bottom: 24px;
+}
+
+.__todo-item-wrap {
+  margin-bottom: 12px;
+}
+
+.__actions-wrap {
+  padding: 48px 12px 24px 12px;
+  --mdc-typography-button-font-size: 12px;
+  --mdc-typography-body2-font-weight: 500;
+}
+
+.__actions-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: center;
+}
+
+.__mark-all-complete-button {
+  width: 100%;
+}
+
+.__count-wrap {
+  padding: 12px;
+  text-align: center;
+}

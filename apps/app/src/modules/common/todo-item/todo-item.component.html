@@ -1,22 +1,41 @@
-<p>{{ data.completed ? '[x]' : '[ ]' }} {{ data.text }}</p>
+<mat-card class="__card">
 
-<form [formGroup]="form">
-  <input
-    type="text"
-    [formControlName]="'text'"
-    (change)="update.emit({
-      id: data.id,
-      data: form.getRawValue()
-    })"
-  />
-  <input
-    type="checkbox"
-    [formControlName]="'completed'"
-    (change)="update.emit({
-      id: data.id,
-      data: form.getRawValue()
-    })"
-  />
-</form>
+  <form [formGroup]="form">
+    <div class="__grid">
 
-<button (click)="delete.emit(data.id)">delete</button>
+      <div>
+        <mat-checkbox
+          [formControlName]="'completed'"
+          (change)="update.emit({
+            id: data.id,
+            data: form.getRawValue()
+          })"></mat-checkbox>
+      </div>
+
+      <div>
+        <mat-form-field class="__input">
+          <input
+            matInput
+            type="text"
+            [formControlName]="'text'"
+            (change)="update.emit({
+              id: data.id,
+              data: form.getRawValue()
+            })"
+          />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button
+          mat-icon-button
+          (click)="delete.emit(data.id)">
+          <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+</mat-card>

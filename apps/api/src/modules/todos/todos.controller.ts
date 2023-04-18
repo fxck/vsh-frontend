@@ -43,7 +43,7 @@ export class TodosController {
     return this.todosService.remove(id);
   }
 
-  @Patch('markAllAsCompleted')
+  @Patch('mark-all-as-completed')
   markAllAsCompleted(@Query('clientId') clientId: string) {
     return this.todosService.markAllAsCompleted(clientId);
   }

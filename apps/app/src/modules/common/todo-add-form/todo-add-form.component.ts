@@ -1,6 +1,17 @@
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { TodoAddPayload } from '@vsh/app/features/todos';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Output
+} from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { TodoAddPayload } from '@vsh/app/core/todos-base';
+import { TodoAddFormInstance } from './todo-add-form.form';
 
 @Component({
   selector: 'vsh-todo-add-form',
@@ -9,25 +20,16 @@ import { TodoAddPayload } from '@vsh/app/features/todos';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatButtonModule
   ]
 })
 export class TodoAddFormComponent {
 
-  form = new FormGroup(
-    {
-      text: new FormControl<string>('', {
-        validators: [ Validators.required ],
-        nonNullable: true
-      }),
-      completed: new FormControl<boolean>(
-        false,
-        {
-          nonNullable: true
-        }
-      )
-    }
-  );
+  form = inject(TodoAddFormInstance).getInstance();
 
   @Output()
   add = new EventEmitter<{ data: TodoAddPayload; }>();
