@@ -10,7 +10,7 @@ import {
   Query,
   Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CreateTodoDto } from './dtos/create.todo.dto';
 import { UpdateTodoDto } from './dtos/update.todo.dto';
 import { TodosService } from './todos.service';
@@ -23,6 +23,15 @@ export class TodosController {
   @Post()
   @ApiOperation({ summary: 'Create a new todo' })
   @ApiResponse({ status: 201, description: 'The todo has been successfully created.' })
+  @ApiBody({
+    description: 'Todo data with clientId',
+    type: CreateTodoDto,
+    schema: {
+      properties: {
+        clientId: { type: 'string' }
+      }
+    }
+  })
   create(@Body() createTodoDto: CreateTodoDto, @Body('clientId') clientId: string) {
     return this.todosService.create(clientId, createTodoDto);
   }
