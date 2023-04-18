@@ -10,3 +10,8 @@ export class CreateTodoDto {
   @IsBoolean()
   readonly completed: boolean;
 }
+
+export class CreateTodoWithClientIdDto extends CreateTodoDto {
+  @IsString()
+  clientId: string;
+}
