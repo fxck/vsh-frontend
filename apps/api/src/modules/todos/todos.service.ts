@@ -12,8 +12,8 @@ export class TodosService {
     private todosRepository: Repository<Todo>,
   ) { }
 
-  async create(clientId: string, createTodoDto: CreateTodoDto): Promise<Todo> {
-    return this.todosRepository.save({ clientId, ...createTodoDto });
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+    return this.todosRepository.save(createTodoDto);
   }
 
   async findAll(clientId: string): Promise<Todo[]> {
