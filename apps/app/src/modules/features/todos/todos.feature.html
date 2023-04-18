@@ -33,6 +33,7 @@
   todos: visibleTodos$,
   count: todosCount$
 } as state">
+
   <div class="__todo-item-wrap" *ngFor="let todo of state.todos">
     <vsh-todo-item
       (delete)="onDelete$.next($event)"

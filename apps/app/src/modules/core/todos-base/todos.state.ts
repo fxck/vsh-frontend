@@ -57,7 +57,7 @@ export const todosState = createFeature({
     })),
     on(todosActions.addSuccess, (state, { data }) => ({
       ...state,
-      data: [ ...state.data, data ]
+      data: [ data, ...state.data ]
     })),
     on(todosActions.updateSuccess, (state, { data }) => ({
       ...state,

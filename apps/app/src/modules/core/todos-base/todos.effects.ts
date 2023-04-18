@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { TodoAddFormInstance } from '@vsh/app/common/todo-add-form';
 import { environment } from '@vsh/app/env';
@@ -12,6 +13,7 @@ export class TodosEffects implements OnInitEffects {
   // deps
   #actions$ = inject(Actions);
   #api = inject(TodosApi);
+  #snack = inject(MatSnackBar);
   #todoAddFormInstance = inject(TodoAddFormInstance);
 
   // effects
@@ -42,6 +44,11 @@ export class TodosEffects implements OnInitEffects {
     tap(() => this.#todoAddFormInstance.reset())
   ), { dispatch: false });
 
+  onAddSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
+    ofType(todosActions.addSuccess),
+    tap(() => this.#snack.open('Úkol přidán', 'Zavřít', { horizontalPosition: 'start' }))
+  ), { dispatch: false });
+
   update$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.update),
     switchMap(({ id, payload }) => this.#api
@@ -52,6 +59,11 @@ export class TodosEffects implements OnInitEffects {
       )
     )
   ));
+
+  onUpdateSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
+    ofType(todosActions.updateSuccess),
+    tap(() => this.#snack.open('Úkol upraven', 'Zavřít', { horizontalPosition: 'start' }))
+  ), { dispatch: false });
 
   delete$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.delete),
@@ -64,6 +76,11 @@ export class TodosEffects implements OnInitEffects {
     )
   ));
 
+  onDeleteSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
+    ofType(todosActions.deleteSuccess),
+    tap(() => this.#snack.open('Úkol smazán', 'Zavřít', { horizontalPosition: 'start' }))
+  ), { dispatch: false });
+
   markAllComplete$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.markAllComplete),
     switchMap(({ clientId }) => this.#api
@@ -74,6 +91,11 @@ export class TodosEffects implements OnInitEffects {
       )
     )
   ));
+
+  onMarkAllCompleteSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
+    ofType(todosActions.markAllCompleteSuccess),
+    tap(() => this.#snack.open('Vše označeno jako vyřešené', 'Zavřít', { horizontalPosition: 'start' }))
+  ), { dispatch: false });
 
   ngrxOnInitEffects() {
     return todosActions.init({ clientId: environment.clientId })
