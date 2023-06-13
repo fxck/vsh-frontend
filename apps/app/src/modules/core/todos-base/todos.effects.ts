@@ -105,5 +105,4 @@ export class TodosEffects implements OnInitEffects {
     return todosActions.init({ clientId: environment.clientId })
   }
 
-
 }
