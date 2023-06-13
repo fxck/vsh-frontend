@@ -1,10 +1,13 @@
+import { inject } from '@angular/core';
 import {
+  Store,
   createActionGroup,
   createFeature,
   createReducer,
   emptyProps,
   on,
-  props
+  props,
+  select
 } from '@ngrx/store';
 import {
   FEATURE_NAME,
@@ -77,3 +80,10 @@ export const todosState = createFeature({
   )
 });
 
+export function todosEntity() {
+  const store = inject(Store);
+
+  return {
+    todos$: store.pipe(select(todosState.selectData))
+  };
+}

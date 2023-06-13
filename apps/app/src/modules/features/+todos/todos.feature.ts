@@ -16,7 +16,8 @@ import {
   TodoUpdatePayload,
   todosActions,
   todosState,
-  incompleteTodos
+  incompleteTodos,
+  todosEntity
 } from '@vsh/app/core/todos-base';
 import { TodosActionsComponent } from '@vsh/app/common/todos-actions';
 import { TodosListComponent } from '@vsh/app/common/todos-list';
@@ -40,6 +41,7 @@ import { TodosCounterComponent } from '@vsh/app/common/todos-counter';
 export class TodosFeature {
 
   // deps
+  #todosEntity = todosEntity();
   #store = inject(Store);
 
   // event streams
@@ -50,7 +52,7 @@ export class TodosFeature {
 
   // data
   hideCompletedSignal = signal(false);
-  todos$ = this.#store.pipe(select(todosState.selectData));
+  todos$ = this.#todosEntity.todos$;
   visibleTodos$ = combineLatest([
     toObservable(this.hideCompletedSignal),
     this.todos$
