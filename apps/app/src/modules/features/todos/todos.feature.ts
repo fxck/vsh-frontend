@@ -17,6 +17,7 @@ import {
   todosActions,
   todosState
 } from '@vsh/app/core/todos-base';
+import { countTodos, incompleteTodos } from '@vsh/app/core/todos-base/todos.utils';
 
 @Component({
   selector: 'vsh-todos',
@@ -56,18 +57,10 @@ export class TodosFeature {
   ]).pipe(
     map(([ hideCompleted, todos ]) => {
       if (!hideCompleted) { return todos; }
-      return todos.filter((todo) => !todo.completed);
+      return incompleteTodos(todos);
     })
   );
-  todosCount$ = this.todos$.pipe(
-    map((todos) => todos.reduce(
-      (acc, todo) => {
-        todo.completed ? acc.completed++ : acc.active++;
-        return acc;
-      },
-      { completed: 0, active: 0 }
-    ))
-  );
+  todosCount$ = this.todos$.pipe(map((todos) => countTodos(todos)));
 
   // action  streams
   #addAction$ = this.onAdd$.pipe(

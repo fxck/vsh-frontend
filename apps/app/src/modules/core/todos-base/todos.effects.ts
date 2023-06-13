@@ -46,7 +46,7 @@ export class TodosEffects implements OnInitEffects {
 
   onAddSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.addSuccess),
-    tap(() => this.#snack.open('Úkol přidán', 'Zavřít', { horizontalPosition: 'start' }))
+    tap(() => this.#openSnack('Úkol přidán'))
   ), { dispatch: false });
 
   update$ = createEffect(() => this.#actions$.pipe(
@@ -62,7 +62,7 @@ export class TodosEffects implements OnInitEffects {
 
   onUpdateSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.updateSuccess),
-    tap(() => this.#snack.open('Úkol upraven', 'Zavřít', { horizontalPosition: 'start' }))
+    tap(() => this.#openSnack('Úkol upraven'))
   ), { dispatch: false });
 
   delete$ = createEffect(() => this.#actions$.pipe(
@@ -78,7 +78,7 @@ export class TodosEffects implements OnInitEffects {
 
   onDeleteSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.deleteSuccess),
-    tap(() => this.#snack.open('Úkol smazán', 'Zavřít', { horizontalPosition: 'start' }))
+    tap(() => this.#openSnack('Úkol smazán'))
   ), { dispatch: false });
 
   markAllComplete$ = createEffect(() => this.#actions$.pipe(
@@ -94,11 +94,16 @@ export class TodosEffects implements OnInitEffects {
 
   onMarkAllCompleteSuccessShowSnackbar$ = createEffect(() => this.#actions$.pipe(
     ofType(todosActions.markAllCompleteSuccess),
-    tap(() => this.#snack.open('Vše označeno jako vyřešené', 'Zavřít', { horizontalPosition: 'start' }))
+    tap(() => this.#openSnack('Vše označeno jako vyřešené'))
   ), { dispatch: false });
+
+  #openSnack(message: string) {
+    this.#snack.open(message, 'Zavřít', { horizontalPosition: 'start' });
+  }
 
   ngrxOnInitEffects() {
     return todosActions.init({ clientId: environment.clientId })
   }
+
 
 }
