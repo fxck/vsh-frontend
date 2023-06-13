@@ -4,7 +4,6 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { select, Store } from '@ngrx/store';
 import {
-  BehaviorSubject,
   combineLatest,
   map,
   merge,
@@ -16,11 +15,12 @@ import {
   TodoAddPayload,
   TodoUpdatePayload,
   todosActions,
-  todosState
+  todosState,
+  incompleteTodos
 } from '@vsh/app/core/todos-base';
-import { incompleteTodos } from '@vsh/app/core/todos-base/todos.utils';
 import { TodosActionsComponent } from '@vsh/app/common/todos-actions';
 import { TodosListComponent } from '@vsh/app/common/todos-list';
+import { TodosCounterComponent } from '@vsh/app/common/todos-counter';
 
 @Component({
   selector: 'vsh-todos',
@@ -33,7 +33,8 @@ import { TodosListComponent } from '@vsh/app/common/todos-list';
     TodoAddFormComponent,
     MatCardModule,
     TodosActionsComponent,
-    TodosListComponent
+    TodosListComponent,
+    TodosCounterComponent
   ]
 })
 export class TodosFeature {
@@ -48,18 +49,18 @@ export class TodosFeature {
   onMarkAllComplete$ = new Subject<void>();
 
   // data
-  #todos$ = this.#store.pipe(select(todosState.selectData));
   #clientId = environment.clientId;
 
-  hideCompleted_ = signal(false);
+  hideCompletedSignal = signal(false);
+  todos$ = this.#store.pipe(select(todosState.selectData));
   visibleTodos$ = combineLatest([
-    toObservable(this.hideCompleted_),
-    this.#todos$
+    toObservable(this.hideCompletedSignal),
+    this.todos$
   ]).pipe(
-    map(([ hideCompleted, todos ]) => {
-      if (!hideCompleted) { return todos; }
-      return incompleteTodos(todos);
-    })
+    map(([ hideCompleted, todos ]) => !hideCompleted
+      ? todos
+      : incompleteTodos(todos)
+    )
   );
 
   // action streams

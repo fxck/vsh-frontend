@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { TodoEntity, TodoUpdatePayload } from '../../core/todos-base';
 import { TodoItemComponent } from '../todo-item';
-import { TodosCounterComponent } from '../todos-counter';
 
 @Component({
   selector: 'vsh-todos-list',
@@ -18,8 +17,7 @@ import { TodosCounterComponent } from '../todos-counter';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgFor,
-    TodoItemComponent,
-    TodosCounterComponent
+    TodoItemComponent
   ]
 })
 export class TodosListComponent {
