@@ -12,6 +12,7 @@ export class CreateTodoDto {
 }
 
 export class CreateTodoWithClientIdDto extends CreateTodoDto {
+  @ApiProperty({ description: 'Unique clientId, use your initials' })
   @IsString()
   clientId: string;
 }
