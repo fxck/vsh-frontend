@@ -49,19 +49,14 @@ export class TodosFeature {
   onMarkAllComplete$ = new Subject<void>();
 
   // data
-  #clientId = environment.clientId;
-
   hideCompletedSignal = signal(false);
   todos$ = this.#store.pipe(select(todosState.selectData));
   visibleTodos$ = combineLatest([
     toObservable(this.hideCompletedSignal),
     this.todos$
-  ]).pipe(
-    map(([ hideCompleted, todos ]) => !hideCompleted
-      ? todos
-      : incompleteTodos(todos)
-    )
-  );
+  ]).pipe(map(([ hide, todos ]) => hide ? incompleteTodos(todos) : todos));
+
+  #clientId = environment.clientId;
 
   // action streams
   #addAction$ = this.onAdd$.pipe(
