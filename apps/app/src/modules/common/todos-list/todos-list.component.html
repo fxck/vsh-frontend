@@ -1,0 +1,16 @@
+<div
+  class="__todo-item-wrap"
+  *ngFor="let todo of todos; trackBy: trackById;">
+  <vsh-todo-item
+    (delete)="deleteItem.emit(todo.id)"
+    (update)="updateItem.emit({
+      id: todo.id,
+      data: $event
+    })"
+    [data]="todo">
+  </vsh-todo-item>
+</div>
+
+<div class="__count-wrap">
+  <vsh-todos-counter [todos]="todos"></vsh-todos-counter>
+</div>

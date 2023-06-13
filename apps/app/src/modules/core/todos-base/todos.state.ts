@@ -45,7 +45,7 @@ export const todosActions = createActionGroup({
     'mark all complete success': emptyProps(),
     'mark all complete fail': emptyProps(),
   }
-})
+});
 
 export const todosState = createFeature({
   name: FEATURE_NAME,

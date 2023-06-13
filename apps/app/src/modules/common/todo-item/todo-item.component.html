@@ -1,15 +1,11 @@
 <mat-card class="__card">
-
   <form [formGroup]="form">
     <div class="__grid">
 
       <div>
         <mat-checkbox
           [formControlName]="'completed'"
-          (change)="update.emit({
-            id: data.id,
-            data: form.getRawValue()
-          })"></mat-checkbox>
+          (change)="update.emit(form.getRawValue())"></mat-checkbox>
       </div>
 
       <div>
@@ -18,10 +14,7 @@
             matInput
             type="text"
             [formControlName]="'text'"
-            (change)="update.emit({
-              id: data.id,
-              data: form.getRawValue()
-            })"
+            (change)="update.emit(form.getRawValue())"
           />
         </mat-form-field>
       </div>
@@ -29,13 +22,12 @@
       <div>
         <button
           mat-icon-button
-          (click)="delete.emit(data.id)">
+          type="button"
+          (click)="delete.emit()">
           <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
         </button>
       </div>
 
     </div>
   </form>
-
-
 </mat-card>

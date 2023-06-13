@@ -5,47 +5,15 @@
 </mat-card>
 
 <div class="__actions-wrap">
-  <div class="__actions-grid">
-
-    <div *ngrxLet="hideCompleted$ as hideCompleted">
-      <mat-slide-toggle
-        #toggleRef
-        [checked]="hideCompleted"
-        (toggleChange)="hideCompleted$.next(!toggleRef.checked)">
-        Skrýt vyřešené
-      </mat-slide-toggle>
-    </div>
-
-    <div>
-      <button
-        class="__mark-all-complete-button"
-        mat-flat-button
-        (click)="onMarkAllComplete$.next()"
-        color="accent">
-        <mat-icon fontSet="material-icons-outlined">check_circle</mat-icon> Označit vše jako vyřešené
-      </button>
-    </div>
-
-  </div>
+  <vsh-todos-actions
+    [hideCompletedState]="!!(hideCompleted$ | async)"
+    (toggleCompleted)="hideCompleted$.next($event)"
+    (markAllComplete)="onMarkAllComplete$.next()">
+  </vsh-todos-actions>
 </div>
 
-<ng-container *ngrxLet="{
-  todos: visibleTodos$,
-  count: todosCount$
-} as state">
-
-  <div class="__todo-item-wrap" *ngFor="let todo of state.todos">
-    <vsh-todo-item
-      (delete)="onDelete$.next($event)"
-      (update)="onUpdate$.next($event)"
-      [data]="todo">
-    </vsh-todo-item>
-  </div>
-
-  <div class="__count-wrap">
-    Vyřešené <strong>{{ state.count.completed }}x</strong> —
-    Aktivní <strong>{{ state.count.active }}x</strong> —
-    Celkem <strong>{{ state.count.active + state.count.completed }}x</strong>
-  </div>
-
-</ng-container>
+<vsh-todos-list
+  (updateItem)="onUpdate$.next($event)"
+  (deleteItem)="onDelete$.next($event)"
+  [todos]="(visibleTodos$ | async) || []">
+</vsh-todos-list>

@@ -17,7 +17,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TodoEntity, TodoUpdatePayload } from '@vsh/app/core/todos-base';
+import {
+  TodoEntity,
+  TodoUpdatePayload
+ } from '../../core/todos-base';
 
 @Component({
   selector: 'vsh-todo-item',
@@ -45,33 +48,25 @@ export class TodoItemComponent {
       }),
       completed: new FormControl<boolean>(
         false,
-        {
-          nonNullable: true
-        }
+        { nonNullable: true }
       )
     }
   );
 
   @Input()
-  set data(value) {
+  set data(value: TodoEntity) {
     if (!value) { return; }
 
     this.form.setValue({
       completed: value.completed,
       text: value.text
     });
-
-    this.#data = value;
   }
-  get data() {
-    return this.#data;
-  }
-  #data!: TodoEntity;
 
   @Output()
-  delete = new EventEmitter<number>();
+  delete = new EventEmitter<void>();
 
   @Output()
-  update = new EventEmitter<{ id: number; data: TodoUpdatePayload; }>();
+  update = new EventEmitter<TodoUpdatePayload>();
 
 }

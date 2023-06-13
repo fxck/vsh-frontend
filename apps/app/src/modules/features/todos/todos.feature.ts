@@ -1,23 +1,27 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { select, Store } from '@ngrx/store';
-import { LetModule } from '@ngrx/component';
-import { BehaviorSubject, combineLatest, map, merge, Subject, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  merge,
+  Subject,
+  takeUntil
+} from 'rxjs';
 import { getObservableLifecycle } from 'ngx-observable-lifecycle';
 import { environment } from '@vsh/app/env';
-import { TodoItemComponent } from '@vsh/app/common/todo-item';
 import { TodoAddFormComponent } from '@vsh/app/common/todo-add-form';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import {
   TodoAddPayload,
   TodoUpdatePayload,
   todosActions,
   todosState
 } from '@vsh/app/core/todos-base';
-import { countTodos, incompleteTodos } from '@vsh/app/core/todos-base/todos.utils';
+import { incompleteTodos } from '@vsh/app/core/todos-base/todos.utils';
+import { TodosActionsComponent } from '@vsh/app/common/todos-actions';
+import { TodosListComponent } from '@vsh/app/common/todos-list';
 
 @Component({
   selector: 'vsh-todos',
@@ -26,14 +30,11 @@ import { countTodos, incompleteTodos } from '@vsh/app/core/todos-base/todos.util
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    LetModule,
-    NgFor,
-    TodoItemComponent,
+    AsyncPipe,
     TodoAddFormComponent,
     MatCardModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    MatIconModule
+    TodosActionsComponent,
+    TodosListComponent
   ]
 })
 export class TodosFeature {
@@ -48,25 +49,25 @@ export class TodosFeature {
   onMarkAllComplete$ = new Subject<void>();
 
   // data
-  clientId = environment.clientId;
+  #todos$ = this.#store.pipe(select(todosState.selectData));
+  #clientId = environment.clientId;
+
   hideCompleted$ = new BehaviorSubject<boolean>(false);
-  todos$ = this.#store.pipe(select(todosState.selectData));
   visibleTodos$ = combineLatest([
     this.hideCompleted$,
-    this.todos$
+    this.#todos$
   ]).pipe(
     map(([ hideCompleted, todos ]) => {
       if (!hideCompleted) { return todos; }
       return incompleteTodos(todos);
     })
   );
-  todosCount$ = this.todos$.pipe(map((todos) => countTodos(todos)));
 
-  // action  streams
+  // action streams
   #addAction$ = this.onAdd$.pipe(
     map(({ data }) => todosActions.add({
       payload: data,
-      clientId: this.clientId
+      clientId: this.#clientId
     }))
   );
   #updateAction$ = this.onUpdate$.pipe(
@@ -76,7 +77,7 @@ export class TodosFeature {
     map((id) => todosActions.delete({ id }))
   );
   #markAllCompleteAction$ = this.onMarkAllComplete$.pipe(
-    map(() => todosActions.markAllComplete({ clientId: this.clientId }))
+    map(() => todosActions.markAllComplete({ clientId: this.#clientId }))
   );
 
   constructor() {
@@ -89,4 +90,5 @@ export class TodosFeature {
       takeUntil(getObservableLifecycle(this).ngOnDestroy)
     ).subscribe(this.#store);
   }
+
 }
