@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { select, Store } from '@ngrx/store';
 import {
@@ -7,10 +8,8 @@ import {
   combineLatest,
   map,
   merge,
-  Subject,
-  takeUntil
+  Subject
 } from 'rxjs';
-import { getObservableLifecycle } from 'ngx-observable-lifecycle';
 import { environment } from '@vsh/app/env';
 import { TodoAddFormComponent } from '@vsh/app/common/todo-add-form';
 import {
@@ -52,9 +51,9 @@ export class TodosFeature {
   #todos$ = this.#store.pipe(select(todosState.selectData));
   #clientId = environment.clientId;
 
-  hideCompleted$ = new BehaviorSubject<boolean>(false);
+  hideCompleted_ = signal(false);
   visibleTodos$ = combineLatest([
-    this.hideCompleted$,
+    toObservable(this.hideCompleted_),
     this.#todos$
   ]).pipe(
     map(([ hideCompleted, todos ]) => {
@@ -86,9 +85,9 @@ export class TodosFeature {
       this.#updateAction$,
       this.#deleteAction$,
       this.#markAllCompleteAction$
-    ).pipe(
-      takeUntil(getObservableLifecycle(this).ngOnDestroy)
-    ).subscribe(this.#store);
+    )
+      .pipe(takeUntilDestroyed())
+      .subscribe(this.#store);
   }
 
 }

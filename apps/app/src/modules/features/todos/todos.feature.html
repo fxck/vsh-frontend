@@ -6,8 +6,8 @@
 
 <div class="__actions-wrap">
   <vsh-todos-actions
-    [hideCompletedState]="!!(hideCompleted$ | async)"
-    (toggleCompleted)="hideCompleted$.next($event)"
+    [hideCompletedState]="hideCompleted_()"
+    (toggleCompleted)="hideCompleted_.set($event)"
     (markAllComplete)="onMarkAllComplete$.next()">
   </vsh-todos-actions>
 </div>
