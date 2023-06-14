@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngrx/store';
@@ -15,8 +14,7 @@ import {
   TodoUpdatePayload,
   todosActions,
   filterCompletedTodos,
-  todosEntity,
-  TodoEntity
+  todosEntity
 } from '@vsh/app/core/todos-base';
 import { TodosActionsComponent } from '@vsh/app/common/todos-actions';
 import { TodosListComponent } from '@vsh/app/common/todos-list';
