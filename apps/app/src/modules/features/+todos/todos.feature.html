@@ -13,9 +13,9 @@
 <vsh-todos-list
   (updateItem)="onUpdate$.next($event)"
   (deleteItem)="onDelete$.next($event)"
-  [todos]="(visibleTodos$ | async) || []">
+  [todos]="state().visibleTodos || []">
 </vsh-todos-list>
 
 <div class="__count-wrap">
-  <vsh-todos-counter [todos]="(todos$ | async) || []"></vsh-todos-counter>
+  <vsh-todos-counter [todos]="state().todos || []"></vsh-todos-counter>
 </div>

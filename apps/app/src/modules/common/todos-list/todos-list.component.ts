@@ -6,7 +6,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { TodoEntity, TodoUpdatePayload } from '../../core/todos-base';
+import { TodoEntity, TodoUpdatePayload } from '@vsh/app/core/todos-base';
 import { TodoItemComponent } from '../todo-item';
 
 @Component({

@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
-  combineLatest,
   map,
   merge,
   Subject
@@ -15,9 +14,9 @@ import {
   TodoAddPayload,
   TodoUpdatePayload,
   todosActions,
-  todosState,
-  incompleteTodos,
-  todosEntity
+  filterCompletedTodos,
+  todosEntity,
+  TodoEntity
 } from '@vsh/app/core/todos-base';
 import { TodosActionsComponent } from '@vsh/app/common/todos-actions';
 import { TodosListComponent } from '@vsh/app/common/todos-list';
@@ -30,7 +29,6 @@ import { TodosCounterComponent } from '@vsh/app/common/todos-counter';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AsyncPipe,
     TodoAddFormComponent,
     MatCardModule,
     TodosActionsComponent,
@@ -52,13 +50,16 @@ export class TodosFeature {
 
   // data
   hideCompletedSignal = signal(false);
-  todos$ = this.#todosEntity.todos$;
-  visibleTodos$ = combineLatest([
-    toObservable(this.hideCompletedSignal),
-    this.todos$
-  ]).pipe(map(([ hide, todos ]) => hide ? incompleteTodos(todos) : todos));
-
+  todosSignal = toSignal(this.#todosEntity.todos$);
   #clientId = environment.clientId;
+
+  // resolver
+  state = computed(() => ({
+    todos: this.todosSignal(),
+    visibleTodos: this.hideCompletedSignal()
+      ? filterCompletedTodos(this.todosSignal())
+      : this.todosSignal()
+  }));
 
   // action streams
   #addAction$ = this.onAdd$.pipe(

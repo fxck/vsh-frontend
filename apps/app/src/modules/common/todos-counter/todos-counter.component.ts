@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { countTodos, TodoEntity } from '../../core/todos-base';
-import { CounterTodos } from '../../core/todos-base';
+import { countTodos, TodoEntity } from '@vsh/app/core/todos-base';
+import { CounterTodos } from '@vsh/app/core/todos-base';
 
 @Component({
   selector: 'vsh-todos-counter',

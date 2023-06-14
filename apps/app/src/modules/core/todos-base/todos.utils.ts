@@ -14,4 +14,4 @@ export const countTodos = (todos: TodoEntity[] = []): CounterTodos => todos.redu
 );
 
 
-export const incompleteTodos = (todos: TodoEntity[]) => todos.filter((todo) => !todo.completed);
+export const filterCompletedTodos = (todos: TodoEntity[] = []) => todos.filter((todo) => !todo.completed);

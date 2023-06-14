@@ -20,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import {
   TodoEntity,
   TodoUpdatePayload
- } from '../../core/todos-base';
+ } from '@vsh/app/core/todos-base';
 
 @Component({
   selector: 'vsh-todo-item',
