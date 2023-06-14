@@ -56,6 +56,7 @@ export class TodosFeature {
   // resolver
   state = computed(() => ({
     todos: this.todosSignal(),
+    hideCompletedSignal: this.hideCompletedSignal(),
     visibleTodos: this.hideCompletedSignal()
       ? filterCompletedTodos(this.todosSignal())
       : this.todosSignal()
