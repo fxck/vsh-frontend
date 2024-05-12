@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api-204b8-3000.app.zerops.io/api',
+  apiUrl: 'https://api-176-3000.prg1.zerops.app/api',
   clientId: 'ar'
 };
