@@ -1,17 +1,18 @@
-api:
-  build:
-    base: [ nodejs@16 ]
+zerops:
+  - setup: api
     build:
-      - npm i
-      - npm run build api
-    deploy: [ dist, package.json, package-lock.json, node_modules ]
-  run:
-    start: node dist/apps/api/main.js
+      base: [ nodejs@18 ]
+      buildCommands:
+        - npm i
+        - npm run build api
+      deploy: [ dist, package.json, package-lock.json, node_modules ]
+    run:
+      start: node dist/apps/api/main.js
 
-app:
-  build:
-    base: [ nodejs@16 ]
+  - setup: app
     build:
-      - npm i
-      - npm run build app
-    deploy: [ dist/apps/app/~ ]
+      base: [ nodejs@16 ]
+      buildCommands:
+        - npm i
+        - npm run build app
+      deploy: [ dist/apps/app/~ ]
