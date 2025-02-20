@@ -11,6 +11,8 @@ zerops:
         - dist
         - package.json
         - node_modules
+      cache:
+        - node_modules
     run:
       start: node dist/apps/api/main.js
       ports:
@@ -25,5 +27,7 @@ zerops:
         - npm run build app
       deployFiles:
         - dist/apps/app/~
+      cache:
+        - node_modules
     run:
       base: static

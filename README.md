@@ -3,7 +3,7 @@ project:
   name: vsh-frontend
 services:
   - hostname: db
-    type: postgresql@22
+    type: postgresql@16
     mode: NON_HA
 
   - hostname: app
