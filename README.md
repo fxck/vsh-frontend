@@ -1,6 +1,9 @@
 ```yaml
 project:
   name: vsh-frontend
+  envVariables:
+    API_URL: https://api-${zeropsSubdomainHost}-3000.prg1.zerops.app
+
 services:
   - hostname: db
     type: postgresql@16
