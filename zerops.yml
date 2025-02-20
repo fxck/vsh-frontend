@@ -1,18 +1,27 @@
 zerops:
   - setup: api
     build:
-      base: [ nodejs@18 ]
+      base: nodejs@22
+      envVariables:
+        DB_URL: ${db_connectionString}
       buildCommands:
         - npm i
         - npm run build api
-      deploy: [ dist, package.json, package-lock.json, node_modules ]
+      deployFiles:
+        - dist
+        - package.json
+        - node_modules
     run:
       start: node dist/apps/api/main.js
+      ports:
+        - port: 3000
+          httpSupport: true
 
   - setup: app
     build:
-      base: [ nodejs@16 ]
+      base: nodejs@22
       buildCommands:
         - npm i
         - npm run build app
-      deploy: [ dist/apps/app/~ ]
+      deployFiles:
+        - dist/apps/app/~
