@@ -2,8 +2,6 @@ zerops:
   - setup: api
     build:
       base: nodejs@22
-      envVariables:
-        DB_URL: ${db_connectionString}
       buildCommands:
         - npm i
         - npm run build api
@@ -15,6 +13,8 @@ zerops:
         - node_modules
     run:
       start: node dist/apps/api/main.js
+      envVariables:
+        DB_URL: ${db_connectionString}
       ports:
         - port: 3000
           httpSupport: true
