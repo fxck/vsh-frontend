@@ -25,3 +25,5 @@ zerops:
         - npm run build app
       deployFiles:
         - dist/apps/app/~
+    run:
+      base: static
