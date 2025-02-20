@@ -31,3 +31,8 @@ zerops:
         - node_modules
     run:
       base: static
+      envVariables:
+        API_URL: ${api_zeropsSubdomain}/api
+      envReplace:
+        delimiter: '%%'
+        target: ./
