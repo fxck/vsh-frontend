@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '%%APP_URL%%',
+  apiUrl: '%%API_URL%%',
   clientId: 'ar'
 };
